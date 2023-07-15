@@ -7,11 +7,11 @@ module Authentication
     helper_method :user_signed_in?
   end
 
-  def login(user_id)
-    session[:user_id] = user_id
+  def login_user(user_id)
+    session[:current_user_id] = user_id
   end
 
-  def logout
+  def logout_user
     reset_session
   end
 
