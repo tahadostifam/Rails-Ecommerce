@@ -3,10 +3,6 @@ require "dry-schema"
 module ValidateParams
   extend ActiveSupport::Concern
 
-  def sample
-    puts "hello"
-  end
-
   def validate_params!(schema, params)
     symbolized_params = symbolize_params(params)
 
