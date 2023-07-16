@@ -4,8 +4,11 @@ class UserController < ApplicationController
       @user = User.new(signup_params)
 
       if @user.save
-        # TODO
-        # - Send sms to client's phone!
+        @otp = PhoneOtp.find_or_initialize_by(phone_number: params[:phone_number])
+        @otp.expires_at = PhoneOtp.generate_expires_at
+        @otp.otp_code = PhoneOtp.generate_otp_code
+
+        SmsClient.send_otp_code(params[:phone_number], @otp.otp_code)
 
         render json: { msg: "Account created" }, status: :ok
       else
@@ -19,9 +22,19 @@ class UserController < ApplicationController
       @user = User.find_by(username: params[:username])
 
       if @user && @user.authenticate(params[:password])
-        login_user @user.id
+        if @user.is_confirmed?
+          # Check user is banned or not
+          if @user.is_banned?
+            return render json: { msg: "Account banned" }, status: :unauthorized
+          end
 
-        render json: UserPresenter.to_json(@user), status: :ok
+          # Success login
+          login_user @user.id
+
+          render json: UserPresenter.to_json(@user), status: :ok
+        else
+          render json: { msg: "Account did not confirmed" }, status: :unauthorized
+        end
       else
         render json: { msg: "Unauthorized" }, status: :unauthorized
       end
