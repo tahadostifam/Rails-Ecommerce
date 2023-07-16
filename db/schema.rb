@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_13_203532) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_16_131205) do
   create_table "cart_items", force: :cascade do |t|
     t.integer "quantity", null: false
     t.integer "session_id"
@@ -27,7 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_13_203532) do
   create_table "discounts", force: :cascade do |t|
     t.string "name", null: false
     t.decimal "discount_percent", null: false
-    t.date "expire_time", null: false
+    t.date "expires_at", null: false
     t.integer "product_id"
     t.index ["product_id"], name: "index_discounts_on_product_id"
   end
@@ -53,8 +53,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_13_203532) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
-    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007fdb7bb68038>"
+    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007f128b68bba0>"
     t.index ["order_detail_id"], name: "index_payment_details_on_order_detail_id"
+  end
+
+  create_table "phone_otps", force: :cascade do |t|
+    t.string "phone_number", null: false
+    t.integer "otp_code", null: false
+    t.datetime "expires_at", null: false
+    t.index ["phone_number"], name: "index_phone_otps_on_phone_number"
   end
 
   create_table "products", force: :cascade do |t|
@@ -63,7 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_13_203532) do
     t.decimal "price"
     t.integer "quantity"
     t.integer "discount_id"
-    t.integer "category_id"
+    t.integer "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_products_on_category_id"

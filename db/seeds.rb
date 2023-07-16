@@ -3,6 +3,7 @@ user = User.create!(
   last_name: "Doe",
   username: "john_doe",
   phone_number: "+989368392346",
+  password: "1234",
   is_customer: true,
 )
 
