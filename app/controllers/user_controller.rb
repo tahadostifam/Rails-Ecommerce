@@ -1,6 +1,9 @@
 class UserController < ApplicationController
   before_action :login_required, only: [:authentication]
 
+  ##
+  # The `signup` function creates a new user account, generates an OTP (one-time password) code, sends the OTP code to the
+  # user's phone number via SMS, and returns a JSON response indicating the success or failure of the account creation.
   def signup
     validate_params!(SignupSchema, params) {
       @user = User.new(signup_params)
@@ -19,6 +22,13 @@ class UserController < ApplicationController
     }
   end
 
+  ##
+  # The `login` function checks if a user's login credentials are valid, and if so, logs them in and returns their user
+  # information in JSON format.
+  #
+  # Returns:
+  #   The code is returning a JSON response with a message and a status code. The specific response depends on the
+  # conditions met in the code:
   def login
     validate_params!(LoginByUsernameSchema, params) {
       @user = User.find_by(username: params[:username])
@@ -43,10 +53,14 @@ class UserController < ApplicationController
     }
   end
 
+  ##
+  # The function "authentication" renders the current user as JSON with a status of "ok".
   def authentication
     render json: UserPresenter.to_json(current_user), status: :ok
   end
 
+  ##
+  # The `logout` function logs out the user and returns a JSON response with a success message.
   def logout
     logout_user
     render json: { msg: "Logout" }, status: :ok

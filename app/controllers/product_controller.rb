@@ -2,12 +2,17 @@ class ProductController < ApplicationController
   before_action :login_required, except: [:index]
   before_action -> { limit_access(action_name, :seller) }, only: [:create, :update, :delete]
 
+  ##
+  # The index function retrieves the last 50 products and renders them as JSON.
   def index
     @products = Product.last(50)
 
     render json: { products: @products }
   end
 
+  ##
+  # The `create` function creates a new product and associates it with a category and discount, if provided, and returns a
+  # JSON response with the product details.
   def create
     validate_params!(CreateProductSchema, params) {
       @product = Product.new(create_params)
@@ -36,6 +41,13 @@ class ProductController < ApplicationController
     }
   end
 
+  ##
+  # The `update` function updates a product with the given parameters, including the category and discount if provided,
+  # and returns a JSON response with the updated product details.
+  #
+  # Returns:
+  #   The code is returning a JSON response with a message and details about the updated product, category, and discount.
+  # The status code of the response depends on the outcome of the update operation.
   def update
     validate_params!(UpdateProductSchema, params) {
       @product = Product.find_by(id: params[:id])
@@ -80,6 +92,9 @@ class ProductController < ApplicationController
     }
   end
 
+  ##
+  # The `delete` function finds a product by its ID, deletes it if found, and returns a JSON response indicating whether
+  # the product was deleted or not.
   def delete
     @product = Product.find_by(id: params[:id])
 

@@ -1,6 +1,9 @@
 class CartController < ApplicationController
   before_action :login_required
 
+  ##
+  # The `index` function retrieves the user's session and cart items, converts them to JSON format using a presenter, and
+  # renders a JSON response with the items and total.
   def index
     @session = Session.find_or_initialize_by(user_id: current_user.id)
 
@@ -9,6 +12,8 @@ class CartController < ApplicationController
     render json: { msg: "Success", detail: { items: @items, total: @session.total } }, status: :ok
   end
 
+  ##
+  # The `add_item` function adds a product to the user's cart and updates the cart's total.
   def add_item
     validate_params!(AddItemToCartSchema, params) {
         @session = Session.find_by(user_id: current_user.id)
@@ -36,6 +41,9 @@ class CartController < ApplicationController
       }
   end
 
+  ##
+  # The `remove_item` function removes a cart item from the database and returns a JSON response indicating whether the
+  # item was successfully removed or not.
   def remove_item
       validate_params!(RemoveCartItem, params) {
         @item = CartItem.find_by(id: params[:item_id])
@@ -50,6 +58,8 @@ class CartController < ApplicationController
       }
   end
 
+  ##
+  # The `update_item` function updates the quantity of a cart item and computes the total for the session it belongs to.
   def update_item
     validate_params!(UpdateCartItem, params) {
         @item = CartItem.find_by(id: params[:item_id])

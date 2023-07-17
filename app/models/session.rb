@@ -2,6 +2,8 @@ class Session < ApplicationRecord
   references :user
   has_many :cart_items
 
+  ##
+  # The function computes the total cost of items in a shopping cart.
   def compute_total
     total = 0
 

@@ -1,4 +1,6 @@
 class PhoneOtpController < ApplicationController
+  ##
+  # The `login_by_phone` function generates and sends an OTP code to a user's phone number for phone-based login.
   def login_by_phone
     validate_params!(LoginByPhoneSchema, params) {
       @otp = PhoneOtp.find_or_initialize_by(phone_number: params[:phone_number])
@@ -13,6 +15,13 @@ class PhoneOtpController < ApplicationController
     }
   end
 
+  ##
+  # The `verify_otp_code` function checks if the provided OTP code matches the one stored in the database for a given
+  # phone number, and if so, verifies the user's account and logs them in.
+  #
+  # Returns:
+  #   The method is returning a JSON response with a message and a status code. The specific JSON response depends on the
+  # conditions met within the method.
   def verify_otp_code
     validate_params!(VerifyOtpCodeSchema, params) {
       @otp = PhoneOtp.find_by(phone_number: params[:phone_number])

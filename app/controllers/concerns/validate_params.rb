@@ -3,6 +3,15 @@ require "dry-schema"
 module ValidateParams
   extend ActiveSupport::Concern
 
+  ##
+  # The function `symbolize_params` converts the keys of a hash from strings to symbols.
+  #
+  # Args:
+  #   params: The `params` parameter is a hash that contains key-value pairs.
+  #
+  # Returns:
+  #   The method is returning a hash where the keys are symbols and the values are the same as the original values in the
+  # params hash.
   def validate_params!(schema, params)
     symbolized_params = symbolize_params(params)
 
@@ -17,6 +26,15 @@ module ValidateParams
 
   private
 
+  ##
+  # The function `symbolize_params` converts the keys of a hash from strings to symbols.
+  #
+  # Args:
+  #   params: The `params` parameter is a hash that contains key-value pairs.
+  #
+  # Returns:
+  #   The method is returning a hash where the keys are symbols and the values are the same as the original values in the
+  # params hash.
   def symbolize_params(params)
     params_hash = {}
     params.each do |k, v|
