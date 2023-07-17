@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  serialize :access, Hash
   has_many :sessions
 
   has_secure_password

@@ -14,4 +14,9 @@ Rails.application.routes.draw do
     put "/update", to: "product#update"
     delete "/delete", to: "product#delete"
   end
+
+  scope :cart do
+    post "/add_item", to: "cart#add_item"
+    delete "/remove_item", to: "cart#remove_item"
+  end
 end

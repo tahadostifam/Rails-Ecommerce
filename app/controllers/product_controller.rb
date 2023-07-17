@@ -1,4 +1,7 @@
 class ProductController < ApplicationController
+  before_action :login_required, except: [:index]
+  before_action -> { limit_access(action_name, :seller) }, only: [:create, :update, :delete]
+
   def index
     @products = Product.last(50)
 

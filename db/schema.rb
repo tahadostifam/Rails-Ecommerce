@@ -15,6 +15,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_131205) do
     t.integer "quantity", null: false
     t.integer "session_id"
     t.integer "product_id"
+    t.index ["product_id", "id"], name: "index_cart_items_on_product_id_and_id", unique: true
     t.index ["product_id"], name: "index_cart_items_on_product_id"
     t.index ["session_id"], name: "index_cart_items_on_session_id"
   end
@@ -53,7 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_131205) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
-    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007f128b68bba0>"
+    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007f4a3295bae0>"
     t.index ["order_detail_id"], name: "index_payment_details_on_order_detail_id"
   end
 
@@ -92,7 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_131205) do
     t.string "address1"
     t.string "address2"
     t.string "postal_code"
-    t.boolean "is_customer", default: false
+    t.text "access"
     t.boolean "is_confirmed", default: false
     t.boolean "is_banned", default: false
     t.datetime "created_at", null: false

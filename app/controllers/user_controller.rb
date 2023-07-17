@@ -1,4 +1,6 @@
 class UserController < ApplicationController
+  before_action :login_required, only: [:authentication]
+
   def signup
     validate_params!(SignupSchema, params) {
       @user = User.new(signup_params)
@@ -42,11 +44,7 @@ class UserController < ApplicationController
   end
 
   def authentication
-    if user_signed_in?
-      render json: UserPresenter.to_json(current_user), status: :ok
-    else
-      render json: { msg: "Unauthorized" }, status: :unauthorized
-    end
+    render json: UserPresenter.to_json(current_user), status: :ok
   end
 
   def logout
