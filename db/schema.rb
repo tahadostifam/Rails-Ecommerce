@@ -23,6 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_131205) do
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.boolean "is_available"
+    t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "discounts", force: :cascade do |t|
@@ -54,7 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_131205) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
-    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007f4a3295bae0>"
+    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007fef7715add8>"
     t.index ["order_detail_id"], name: "index_payment_details_on_order_detail_id"
   end
 
@@ -62,7 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_131205) do
     t.string "phone_number", null: false
     t.integer "otp_code", null: false
     t.datetime "expires_at", null: false
-    t.index ["phone_number"], name: "index_phone_otps_on_phone_number"
+    t.index ["phone_number"], name: "index_phone_otps_on_phone_number", unique: true
   end
 
   create_table "products", force: :cascade do |t|
@@ -98,6 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_131205) do
     t.boolean "is_banned", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["username", "phone_number"], name: "index_users_on_username_and_phone_number", unique: true
   end
 
 end

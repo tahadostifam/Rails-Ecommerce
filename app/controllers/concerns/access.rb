@@ -6,6 +6,10 @@ class Access
   end
 
   def has_access?(action_name, role_required)
+    unless @list
+      return false
+    end
+
     if role_required == :admin || role_required == @role
       # Admin has access to do anything/
       if @role == :admin

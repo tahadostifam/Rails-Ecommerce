@@ -20,11 +20,9 @@ class ProductController < ApplicationController
 
           if @discount
             detail[:discount] = {
-              :discount => {
-                name: @discount.name,
-                discount_percent: @discount.discount_percent,
-                expires_at: @discount.discount_percent,
-              },
+              name: @discount.name,
+              discount_percent: @discount.discount_percent,
+              expires_at: @discount.discount_percent,
             }
           end
 

@@ -11,6 +11,10 @@ class ApplicationController < ActionController::API
   def limit_access(action_name, role_required)
     user_role = current_user.access[:role]
 
+    unless user_role
+      user_role = :user
+    end
+
     role = Access.new(current_user.access[:list], user_role, controller_name)
 
     unless role.has_access? action_name, role_required

@@ -4,6 +4,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
+
+
   def confirmed?
     is_confirmed
   end

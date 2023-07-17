@@ -4,6 +4,13 @@ user = User.create!(
   username: "john_doe",
   phone_number: "+989368392346",
   password: "1234",
+  is_confirmed: true,
+  access: {
+    :role => :seller,
+    :list => {
+      :product => [:create, :update, :delete]
+    }
+  }
 )
 
 category = Category.create!(
@@ -17,6 +24,13 @@ product = Product.create!(
   price: 10,
   quantity: 3,
   category_id: category.id,
+)
+
+discount = Discount.create!(
+  name: "Sample Discount 1",
+  discount_percent: 5,
+  expires_at: Time.now + 2.days,
+  product_id: product.id
 )
 
 # Making a sample cart! :
