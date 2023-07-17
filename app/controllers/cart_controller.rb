@@ -6,18 +6,29 @@ class CartController < ApplicationController
 
     @items = CartPresenter.to_json(@session.cart_items)
 
-    render json: { msg: "Success", detail: { items: @items } }, status: :ok
+    render json: { msg: "Success", detail: { items: @items, total: @session.total } }, status: :ok
   end
 
   def add_item
     validate_params!(AddItemToCartSchema, params) {
-        @session = Session.find_or_initialize_by(user_id: current_user.id)
+        @session = Session.find_by(user_id: current_user.id)
 
-        @item = CartItem.find_or_initialize_by(product_id: params[:product_id])
-        @item.quantity = params[:quantity]
-        @item.session_id = @session.id
+        unless @session
+          @session = Session.create!(user_id: current_user.id)
+        end
+
+        @item = CartItem.find_by(product_id: params[:product_id])
+
+        if @item
+          @item.quantity += params[:quantity]
+        else
+          @item = CartItem.create!(product_id: params[:product_id], session_id: @session.id, quantity: params[:quantity])
+        end
 
         if @item.save
+          @session.compute_total
+          @session.save
+
           render json: { msg: "Item added" }, status: :ok
         else
           render json: { msg: "Unable to add item", detail: { errors: @item.errors } }, status: :ok
@@ -45,6 +56,9 @@ class CartController < ApplicationController
 
         if @item
           @item.update(quantity: params[:quantity])
+
+          @item.session.compute_total
+          @item.session.save
 
           render json: { msg: "Item updated" }, status: :ok
         else
