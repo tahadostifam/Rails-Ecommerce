@@ -2,6 +2,8 @@ class ApplicationController < ActionController::API
   include ValidateParams
   include Authentication
 
+  helper_method :internal_server_error
+
   ##
   # The function checks if a user is signed in and returns a JSON response with an error message if not.
   def login_required
@@ -31,5 +33,11 @@ class ApplicationController < ActionController::API
     unless role.has_access? action_name, role_required
       render json: { msg: "No access to this action", detail: { role: user_role, access: current_user.access[:list], action_name: action_name } }, status: :forbidden
     end
+  end
+
+  private
+
+  def internal_server_error
+    render json: { msg: "Internal server error" }, status: :internal_server_error
   end
 end
