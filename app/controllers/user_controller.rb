@@ -5,21 +5,19 @@ class UserController < ApplicationController
   # The `signup` function creates a new user account, generates an OTP (one-time password) code, sends the OTP code to the
   # user's phone number via SMS, and returns a JSON response indicating the success or failure of the account creation.
   def signup
-    validate_params!(SignupSchema, params) {
-      @user = User.new(signup_params)
+    @user = User.new(signup_params)
 
-      if @user.save
-        @otp = PhoneOtp.find_or_initialize_by(phone_number: params[:phone_number])
-        @otp.expires_at = PhoneOtp.generate_expires_at
-        @otp.otp_code = PhoneOtp.generate_otp_code
+    if @user.save
+      @otp = PhoneOtp.find_or_initialize_by(phone_number: params[:phone_number])
+      @otp.expires_at = PhoneOtp.generate_expires_at
+      @otp.otp_code = PhoneOtp.generate_otp_code
 
-        SmsClient.send_otp_code(params[:phone_number], @otp.otp_code)
+      SmsClient.send_otp_code(params[:phone_number], @otp.otp_code)
 
-        render json: { msg: "Account created" }, status: :ok
-      else
-        internal_server_error
-      end
-    }
+      render json: { msg: "Account created" }, status: :ok
+    else
+      render json: { msg: "Unable to create account", detail: { errors: @user.errors.full_messages } }, status: :ok
+    end
   end
 
   ##
@@ -30,33 +28,31 @@ class UserController < ApplicationController
   #   The code is returning a JSON response with a message and a status code. The specific response depends on the
   # conditions met in the code:
   def login
-    validate_params!(LoginByUsernameSchema, params) {
-      @user = User.find_by(username: params[:username])
+    @user = User.find_by(username: params[:username])
 
-      if @user && @user.authenticate(params[:password])
-        if @user.is_confirmed?
-          # Check user is banned or not
-          if @user.is_banned?
-            return render json: { msg: "Account banned" }, status: :unauthorized
-          end
-
-          # Success login
-          login_user @user.id
-
-          render json: UserPresenter.to_json(@user), status: :ok
-        else
-          render json: { msg: "Account did not confirmed" }, status: :unauthorized
+    if @user && @user.authenticate(params[:password])
+      if @user.is_confirmed?
+        # Check user is banned or not
+        if @user.is_banned?
+          return render json: { msg: "Account banned" }, status: :unauthorized
         end
+
+        # Success login
+        login_user @user.id
+
+        render json: { msg: "Success", detail: { user: @user.as_json } }, status: :ok
       else
-        render json: { msg: "Unauthorized" }, status: :unauthorized
+        render json: { msg: "Account did not confirmed" }, status: :unauthorized
       end
-    }
+    else
+      render json: { msg: "Unauthorized" }, status: :unauthorized
+    end
   end
 
   ##
   # The function "authentication" renders the current user as JSON with a status of "ok".
   def authentication
-    render json: UserPresenter.to_json(current_user), status: :ok
+    render json: { msg: "Success", detail: { user: current_user.as_json } }, status: :ok
   end
 
   ##

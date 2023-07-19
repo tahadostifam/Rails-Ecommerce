@@ -35,7 +35,7 @@ class CartController < ApplicationController
 
       render json: { msg: "Item added" }, status: :ok
     else
-      render json: { msg: "Unable to add item", detail: { errors: @item.errors } }, status: :bad_request
+      render json: { msg: "Unable to add item", detail: { errors: @item.errors.full_messages } }, status: :bad_request
     end
   end
 
@@ -66,7 +66,7 @@ class CartController < ApplicationController
 
         render json: { msg: "Item updated" }, status: :ok
       else
-        render json: { msg: "Unable to add item", detail: { errors: @item.errors } }, status: :bad_request
+        render json: { msg: "Unable to add item", detail: { errors: @item.errors.full_messages } }, status: :bad_request
       end
     else
       render json: { msg: "Item not found" }, status: :bad_request
