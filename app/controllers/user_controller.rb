@@ -16,7 +16,7 @@ class UserController < ApplicationController
 
       render json: { msg: "Account created" }, status: :ok
     else
-      render json: { msg: "Unable to create account", detail: { errors: @user.errors.full_messages } }, status: :ok
+      render json: { msg: "Unable to create account", detail: { errors: @user.errors.full_messages } }, status: :bad_request
     end
   end
 
