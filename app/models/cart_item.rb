@@ -11,19 +11,18 @@ class CartItem < ApplicationRecord
     super(
       options.merge({
         include: {
-        product: {
-          include: {
-            discounts: { only: [:name, :discount_percent] } },
-            except: [
-              :created_at,
-              :updated_at,
-              :category_id,
-              :discount_id,
-              :quantity,
-            ]
-          }
-        },
-        except: [:product_id, :session_id]
+          product: {
+            include: {
+              except: [
+                :created_at,
+                :updated_at,
+                :category_id,
+                :quantity,
+              ]
+            }
+          },
+          except: [:product_id, :session_id]
+        }
       })
     )
   end

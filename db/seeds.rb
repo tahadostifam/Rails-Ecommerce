@@ -3,7 +3,7 @@ user = User.create!(
   last_name: "Doe",
   username: "john_doe",
   phone_number: "+989368392346",
-  password: "1234",
+  password: "1234@Doe",
   is_confirmed: true,
   access: {
     :role => :seller,
@@ -29,8 +29,7 @@ product = Product.create!(
 discount = Discount.create!(
   name: "Sample Discount 1",
   discount_percent: 5,
-  expires_at: Time.now + 2.days,
-  product_id: product.id
+  expires_at: Time.now + 2.days
 )
 
 # Making a sample cart! :

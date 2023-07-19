@@ -6,7 +6,6 @@ class CreateProducts < ActiveRecord::Migration[7.0]
       t.decimal :price
       t.integer :quantity
 
-      t.references :discount
       t.references :category, null: false
 
       t.timestamps

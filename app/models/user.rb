@@ -5,7 +5,7 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  after_initialize :init_default_access
+  before_save :init_default_access
 
   validates :name, :last_name, :username, :phone_number, :access, presence: true
   validates :password, presence: true, on: [:create]
@@ -35,6 +35,6 @@ class User < ApplicationRecord
     self.access = {
       :role => :user,
       :list => nil
-    }
+    } if self.access.blank?
   end
 end

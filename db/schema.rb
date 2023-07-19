@@ -30,8 +30,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_131205) do
     t.string "name", null: false
     t.decimal "discount_percent", null: false
     t.date "expires_at", null: false
-    t.integer "product_id"
-    t.index ["product_id"], name: "index_discounts_on_product_id"
   end
 
   create_table "order_details", force: :cascade do |t|
@@ -55,7 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_131205) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
-    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007fef7715add8>"
+    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007fdc7efa5480>"
     t.index ["order_detail_id"], name: "index_payment_details_on_order_detail_id"
   end
 
@@ -71,12 +69,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_16_131205) do
     t.string "desc"
     t.decimal "price"
     t.integer "quantity"
-    t.integer "discount_id"
     t.integer "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_products_on_category_id"
-    t.index ["discount_id"], name: "index_products_on_discount_id"
   end
 
   create_table "sessions", force: :cascade do |t|

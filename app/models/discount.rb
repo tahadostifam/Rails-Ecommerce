@@ -1,3 +1,3 @@
 class Discount < ApplicationRecord
-  references :product
+  has_many :products
 end

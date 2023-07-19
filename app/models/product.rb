@@ -1,4 +1,5 @@
 class Product < ApplicationRecord
-  references :category
-  has_many :discounts
+  belongs_to :category
+
+  validates :name, :desc, :price, :quantity, presence: true
 end

@@ -11,85 +11,34 @@ class ProductController < ApplicationController
   end
 
   ##
-  # The `create` function creates a new product and associates it with a category and discount, if provided, and returns a
-  # JSON response with the product details.
+  # The above function creates a new product and returns a JSON response indicating whether the product was successfully
+  # created or not.
   def create
-    validate_params!(CreateProductSchema, params) {
-      @product = Product.new(create_params)
-      @category = Category.find_by(id: params[:category_id])
-      @discount = Discount.find_by(id: params[:discount_id])
+    @product = Product.new(create_params)
 
-      unless @category.nil?
-        if @product.save
-          detail = { :category => { name: @category.name, is_available: @category.is_available } }
-
-          if @discount
-            detail[:discount] = {
-              name: @discount.name,
-              discount_percent: @discount.discount_percent,
-              expires_at: @discount.discount_percent,
-            }
-          end
-
-          render json: { msg: "Product created", detail: detail }, status: :created
-        else
-          internal_server_error
-        end
-      else
-        render json: { msg: "Category not found" }, status: :bad_request
-      end
-    }
+    if @product.save
+      render json: { msg: "Product created" }, status: :created
+    else
+      render json: { msg: "Unable to create product", detail: { errors: @product.errors.full_messages } }, status: :bad_request
+    end
   end
 
+
   ##
-  # The `update` function updates a product with the given parameters, including the category and discount if provided,
-  # and returns a JSON response with the updated product details.
-  #
-  # Returns:
-  #   The code is returning a JSON response with a message and details about the updated product, category, and discount.
-  # The status code of the response depends on the outcome of the update operation.
+  # The `update` function updates a product record in the database and returns a JSON response indicating the success or
+  # failure of the update operation.
   def update
-    validate_params!(UpdateProductSchema, params) {
-      @product = Product.find_by(id: params[:id])
+    @product = Product.find_by(id: params[:id])
 
-      if params[:category_id]
-        @category = Category.find_by(id: params[:category_id])
-        unless @category
-          return render json: { msg: "Category not found" }, status: :bad_request
-        end
-      end
-
-      if params[:discount_id]
-        @discount = Discount.find_by(id: params[:discount_id])
-        unless @discount
-          return render json: { msg: "Discount not found" }, status: :bad_request
-        end
-      end
-
-      if @product
-        if @product.update(update_params)
-          detail = { product: @product }
-
-          if @category
-            detail[:category] = { name: @category.name, is_available: @category.is_available }
-          end
-
-          if @discount
-            detail[:discount] = {
-              name: @discount.name,
-              discount_percent: @discount.discount_percent,
-              expires_at: @discount.discount_percent,
-            }
-          end
-
-          render json: { msg: "Product updated", detail: detail }, status: :ok
-        else
-          internal_server_error
-        end
+    if @product
+      if @product.update(update_params)
+        render json: { msg: "Product updated" }, status: :ok
       else
-        render json: { msg: "Product not found" }, status: :bad_request
+        render json: { msg: "Unable to update product", detail: { errors: @product.errors.full_messages } }, status: :bad_request
       end
-    }
+    else
+      render json: { msg: "Product not found" }, status: :bad_request
+    end
   end
 
   ##
@@ -110,10 +59,10 @@ class ProductController < ApplicationController
   private
 
   def create_params
-    params.permit(:name, :desc, :price, :quantity, :category_id, :discount_id)
+    params.permit(:name, :desc, :price, :quantity, :category_id)
   end
 
   def update_params
-    params.permit(:name, :desc, :price, :quantity, :category_id, :discount_id)
+    params.permit(:name, :desc, :price, :quantity, :category_id)
   end
 end
