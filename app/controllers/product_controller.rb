@@ -23,7 +23,6 @@ class ProductController < ApplicationController
     end
   end
 
-
   ##
   # The `update` function updates a product record in the database and returns a JSON response indicating the success or
   # failure of the update operation.

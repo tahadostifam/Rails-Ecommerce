@@ -1,15 +1,16 @@
 class CartController < ApplicationController
   before_action :login_required
 
+
   ##
-  # The `index` function retrieves the user's session and cart items, converts them to JSON format using a presenter, and
-  # renders a JSON response with the items and total.
+  # The `index` function retrieves the cart items for the current user's session and returns them as JSON along with the
+  # total price.
   def index
     @session = Session.find_or_initialize_by(user_id: current_user.id)
 
-    @items = CartPresenter.to_json(@session.cart_items)
+    @items = @session.cart_items
 
-    render json: { msg: "Success", detail: { items: @items, total: @session.total } }, status: :ok
+    render json: { msg: "Success", detail: { items: @items.as_json, total: @session.total } }, status: :ok
   end
 
   ##

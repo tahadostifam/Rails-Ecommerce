@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Motor::Admin => '/admin'
+
   scope :users do
     post "/signup", to: "user#signup"
     post "/authentication", to: "user#authentication"

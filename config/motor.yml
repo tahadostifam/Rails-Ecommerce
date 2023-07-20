@@ -1,0 +1,36 @@
+---
+engine_version: 0.4.20
+file_version: 2023-07-20 00:45:32.419923000 +03:30
+resources: []
+configs:
+- key: header.links
+  value:
+  - name: Reports
+    link_type: reports
+  - name: Forms
+    link_type: forms
+  updated_at: 2023-07-20 00:40:46.388051000 +00:00
+- key: resources.order
+  value:
+  - cart_item
+  - user
+  - product
+  - category
+  - discount
+  - order_detail
+  - order_item
+  - payment_detail
+  - phone_otp
+  - session
+  updated_at: 2023-07-20 00:45:32.419923000 +00:00
+queries: []
+dashboards: []
+forms: []
+alerts: []
+api_configs:
+- id: 1
+  name: origin
+  url: "/"
+  preferences: {}
+  description:
+  updated_at: 2023-07-20 00:39:54.508971000 +00:00

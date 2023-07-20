@@ -12,17 +12,15 @@ class CartItem < ApplicationRecord
       options.merge({
         include: {
           product: {
-            include: {
-              except: [
-                :created_at,
-                :updated_at,
-                :category_id,
-                :quantity,
-              ]
-            }
+            except: [
+              :created_at,
+              :updated_at,
+              :category_id,
+              :quantity
+            ]
           },
-          except: [:product_id, :session_id]
-        }
+        },
+        except: [:product_id, :session_id]
       })
     )
   end
