@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::API
-  include ValidateParams
   include Authentication
 
   helper_method :internal_server_error
