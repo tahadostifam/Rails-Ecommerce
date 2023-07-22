@@ -1,5 +1,7 @@
 class ProductController < ApplicationController
   before_action :login_required, except: [:index]
+
+  # FIXME
   before_action -> { limit_access(action_name, :seller) }, only: [:create, :update, :delete]
 
   ##
@@ -7,7 +9,7 @@ class ProductController < ApplicationController
   def index
     @products = Product.last(50)
 
-    render json: { products: @products }
+    render template: 'api/product/index', status: :ok
   end
 
   ##

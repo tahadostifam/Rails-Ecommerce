@@ -1,15 +1,23 @@
 ---
 engine_version: 0.4.20
-file_version: 2023-07-20 00:45:32.419923000 +03:30
-resources: []
+file_version: 2023-07-21 05:41:03.500641000 +03:30
+resources:
+- name: user
+  preferences:
+    columns:
+    - access_type: hidden
+      name: password_digest
+    - access_type: hidden
+      name: created_at
+    - access_type: read_write
+      name: updated_at
+  updated_at: 2023-07-21 05:41:03.500641000 +00:00
 configs:
 - key: header.links
   value:
-  - name: Reports
-    link_type: reports
-  - name: Forms
-    link_type: forms
-  updated_at: 2023-07-20 00:40:46.388051000 +00:00
+  - name: "⭐ Star on GitHub"
+    path: https://github.com/motor-admin/motor-admin-rails
+  updated_at: 2023-07-21 05:22:16.916814000 +00:00
 - key: resources.order
   value:
   - cart_item
@@ -33,4 +41,4 @@ api_configs:
   url: "/"
   preferences: {}
   description:
-  updated_at: 2023-07-20 00:39:54.508971000 +00:00
+  updated_at: 2023-07-21 05:22:16.938953000 +00:00

@@ -245,7 +245,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_002550) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
-    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007f26480db180>"
+    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007f870e419618>"
     t.index ["order_detail_id"], name: "index_payment_details_on_order_detail_id"
   end
 

@@ -14,8 +14,7 @@ user = User.create!(
 )
 
 category = Category.create!(
-  name: "Category1",
-  is_available: true,
+  name: "Category1"
 )
 
 product = Product.create!(
