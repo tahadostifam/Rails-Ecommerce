@@ -14,9 +14,6 @@ Rails.application.routes.draw do
 
       scope :products do
         get "/index", to: "product#index"
-        post "/create", to: "product#create"
-        put "/update", to: "product#update"
-        delete "/delete", to: "product#delete"
       end
 
       scope :cart do
