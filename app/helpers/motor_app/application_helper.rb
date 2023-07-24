@@ -1,2 +1,0 @@
-module MotorApp::ApplicationHelper
-end
