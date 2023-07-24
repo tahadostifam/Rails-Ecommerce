@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  mount Motor::Admin, at: '/admin_panel'
-
   scope :api, defaults: { format: :json } do
     scope :v1 do
       scope :users do

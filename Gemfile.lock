@@ -230,7 +230,7 @@ DEPENDENCIES
   dry-schema
   jbuilder
   kaminari
-  motor-admin (~> 0.4.20)
+  motor-admin (~> 0.4.17)
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.6)

@@ -1,10 +1,10 @@
 user = User.create!(
   name: "John",
   last_name: "Doe",
-  username: "john_doe",
+  username: "john",
   phone_number: "+989368392346",
-  password: "1234@Doe",
-  confirmed: false,
+  password: "1234@User",
+  confirmed: true,
   role: :user
 )
 
@@ -13,7 +13,7 @@ admin = User.create!(
   last_name: "Admin",
   username: "admin",
   phone_number: "+989368392347",
-  password: "4321@Admin",
+  password: "1234@User",
   confirmed: true,
   role: :admin
 )
@@ -23,7 +23,7 @@ seller = User.create!(
   last_name: "Seller",
   username: "seller",
   phone_number: "+989368392348",
-  password: "4321@Seller",
+  password: "1234@User",
   confirmed: true,
   role: :seller
 )
