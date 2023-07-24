@@ -6,14 +6,11 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :username, null: false
       t.string :password_digest
       t.string :phone_number, null: false
-      t.string :address1
-      t.string :address2
-      t.string :postal_code
 
-      t.text :access
+      t.string :role, default: :user
 
-      t.boolean :is_confirmed, default: false
-      t.boolean :is_banned, default: false
+      t.boolean :confirmed, default: false
+      t.boolean :locked, default: false
 
       t.timestamps
 

@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_20_002550) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_22_140305) do
+  create_table "account_details", force: :cascade do |t|
+    t.string "address1"
+    t.string "address2"
+    t.string "postal_code"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_account_details_on_user_id"
+  end
+
   create_table "cart_items", force: :cascade do |t|
     t.integer "quantity", null: false
     t.integer "session_id"
@@ -245,7 +253,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_002550) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
-    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007f870e419618>"
+    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007fe222daa780>"
     t.index ["order_detail_id"], name: "index_payment_details_on_order_detail_id"
   end
 
@@ -279,12 +287,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_002550) do
     t.string "username", null: false
     t.string "password_digest"
     t.string "phone_number", null: false
-    t.string "address1"
-    t.string "address2"
-    t.string "postal_code"
-    t.text "access"
-    t.boolean "is_confirmed", default: false
-    t.boolean "is_banned", default: false
+    t.string "role", default: "user"
+    t.boolean "confirmed", default: false
+    t.boolean "locked", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["username", "phone_number"], name: "index_users_on_username_and_phone_number", unique: true

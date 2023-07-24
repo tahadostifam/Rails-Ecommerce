@@ -7,7 +7,7 @@ class PhoneOtpController < ApplicationController
     SmsClient.send_otp_code(params[:phone_number], @otp.otp_code)
 
     if @otp.save
-      render json: { msg: "Code sent" }, status: :ok
+      render json: { msg: "Account confirmation code sent" }, status: :ok
     else
       render json: { msg: "Unable to create otp record in database", detail: { errors: @otp.errors.full_messages } }, status: :bad_request
     end
@@ -33,18 +33,19 @@ class PhoneOtpController < ApplicationController
 
       if @user
         # Check user is banned or not
-        if @user.is_banned?
+        if @user.locked?
           return render json: { msg: "Account banned" }, status: :unauthorized
         end
 
         # Set account confirmed to True!
-        unless @user.is_confirmed?
-          @user.update(is_confirmed: true)
+        unless @user.confirmed?
+          @user.confirm!
+          @user.save
         end
 
         # Success
         login_user @user.id
-        render json: { msg: "Success", detail: { user: @user.as_json } }, status: :ok
+        render template: 'api/users/index', status: :ok, locals: { msg: "Success" }
 
         # Destroying Otp Code
         @otp.destroy

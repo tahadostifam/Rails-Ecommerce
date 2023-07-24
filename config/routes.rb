@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  mount Motor::Admin => '/admin_panel'
+  mount Motor::Admin, at: '/admin_panel'
 
   scope :api, defaults: { format: :json } do
     scope :v1 do
@@ -8,6 +8,7 @@ Rails.application.routes.draw do
         post "/authentication", to: "user#authentication"
         post "/logout", to: "user#logout"
         post "/login_by_username", to: "user#login"
+        post "/update_profile", to: "user#update_profile"
         post "/login_by_phone", to: "phone_otp#login_by_phone"
         post "/verify_otp_code", to: "phone_otp#verify_otp_code"
       end

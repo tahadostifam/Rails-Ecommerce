@@ -1,0 +1,2 @@
+module Motor::ApplicationHelper
+end

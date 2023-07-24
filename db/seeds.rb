@@ -4,13 +4,28 @@ user = User.create!(
   username: "john_doe",
   phone_number: "+989368392346",
   password: "1234@Doe",
-  is_confirmed: true,
-  access: {
-    :role => :seller,
-    :list => {
-      :product => [:create, :update, :delete]
-    }
-  }
+  confirmed: false,
+  role: :user
+)
+
+admin = User.create!(
+  name: "Admin",
+  last_name: "Admin",
+  username: "admin",
+  phone_number: "+989368392347",
+  password: "4321@Admin",
+  confirmed: true,
+  role: :admin
+)
+
+seller = User.create!(
+  name: "Seller",
+  last_name: "Seller",
+  username: "seller",
+  phone_number: "+989368392348",
+  password: "4321@Seller",
+  confirmed: true,
+  role: :seller
 )
 
 category = Category.create!(

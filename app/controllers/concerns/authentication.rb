@@ -26,10 +26,10 @@ module Authentication
   private
 
   def current_user
-    CurrentUser.user ||= session[:current_user_id] && User.find_by(id: session[:current_user_id])
+    @current_user ||= session[:current_user_id] && User.find_by(id: session[:current_user_id])
   end
 
   def user_signed_in?
-    CurrentUser.user.present?
+    @current_user.present?
   end
 end

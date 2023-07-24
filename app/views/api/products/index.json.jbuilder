@@ -1,4 +1,4 @@
-json.msg "Success"
+json.msg msg
 
 json.detail do
   json.array! @products do |item|

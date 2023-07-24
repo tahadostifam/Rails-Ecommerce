@@ -1,36 +1,27 @@
 ---
 engine_version: 0.4.20
-file_version: 2023-07-21 05:41:03.500641000 +03:30
+file_version: 2023-07-23 16:15:32.351650000 +03:30
 resources:
 - name: user
   preferences:
     columns:
     - access_type: hidden
       name: password_digest
-    - access_type: hidden
-      name: created_at
-    - access_type: read_write
-      name: updated_at
-  updated_at: 2023-07-21 05:41:03.500641000 +00:00
+  updated_at: 2023-07-23 16:15:32.351650000 +00:00
 configs:
 - key: header.links
   value:
   - name: "⭐ Star on GitHub"
     path: https://github.com/motor-admin/motor-admin-rails
-  updated_at: 2023-07-21 05:22:16.916814000 +00:00
-- key: resources.order
+  updated_at: 2023-07-22 14:34:11.618342000 +00:00
+- key: resources.account_detail.columns.order
   value:
-  - cart_item
-  - user
-  - product
-  - category
-  - discount
-  - order_detail
-  - order_item
-  - payment_detail
-  - phone_otp
-  - session
-  updated_at: 2023-07-20 00:45:32.419923000 +00:00
+  - id
+  - address1
+  - address2
+  - postal_code
+  - user_id
+  updated_at: 2023-07-22 14:35:15.924531000 +00:00
 queries: []
 dashboards: []
 forms: []
@@ -41,4 +32,4 @@ api_configs:
   url: "/"
   preferences: {}
   description:
-  updated_at: 2023-07-21 05:22:16.938953000 +00:00
+  updated_at: 2023-07-22 14:34:11.633033000 +00:00

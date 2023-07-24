@@ -1,5 +1,5 @@
 class CartController < ApplicationController
-  before_action :login_required
+  before_action :authenticate_user!
 
   ##
   # The `index` function retrieves the cart items for the current user's session and returns them as JSON along with the
@@ -9,7 +9,7 @@ class CartController < ApplicationController
 
     @items = @session.cart_items
 
-    render template: 'api/cart/index', status: :ok
+    render template: 'api/carts/index', status: :ok, locals: { msg: "Success" }
   end
 
   ##
