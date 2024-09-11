@@ -4,11 +4,11 @@ class UsersController < ApplicationController
   before_action :authenticated?, only: [ :authenticate, :update_profile ]
 
   def login
-    @user = User.find_by(email: params[:email])
+    user = User.find_by(email: params[:email])
 
-    if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
-      render "users/user", status: :ok
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      render "users/user", status: :ok, locals: { user: user }
     else
       render "users/unauthorized", status: :unauthorized
     end

@@ -13,5 +13,11 @@ module Auth
     def authenticated?
       active_user.present?
     end
+
+    def admin_permission_required
+      if !active_user.admin
+        render json: { msg: "permission denied" }, status: :service_unavailable
+      end
+    end
   end
 end

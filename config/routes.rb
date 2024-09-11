@@ -6,5 +6,10 @@ Rails.application.routes.draw do
     post "users/register"
     post "users/authenticate"
     post "users/update_profile"
+
+    get "products/search", to: "products#search"
+
+    resources :products
+    resources :categories
   end
 end

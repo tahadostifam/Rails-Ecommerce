@@ -52,6 +52,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_11_122243) do
     t.string "password_digest", null: false
     t.text "location"
     t.string "city"
+    t.boolean "admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

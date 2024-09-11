@@ -8,6 +8,15 @@ User.create([
   }
 ])
 
+User.create([
+  {
+    name: "Jane Doe",
+    email: "jane_doe@mail.com",
+    password: "12345678",
+    admin: true
+  }
+])
+
 Category.create([
   { name: "Sample Category" }
 ])
