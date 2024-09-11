@@ -5,5 +5,6 @@ Rails.application.routes.draw do
     post "users/login"
     post "users/register"
     post "users/authenticate"
+    post "users/update_profile"
   end
 end
